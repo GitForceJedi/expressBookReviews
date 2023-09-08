@@ -77,7 +77,7 @@ regd_users.put('/auth/review/:isbn', (req, res) => {
 
   if (!bookreviews.length) {
     bookreviews.push({ user: username, review: review });
-    return res.send(req.query.review);
+    return res.send('Review Added: ' + review);
   }
 
   // Define the key and value to check for
@@ -90,14 +90,14 @@ regd_users.put('/auth/review/:isbn', (req, res) => {
   // Check if no match is found and perform an action
   if (!isMatchFound) {
     bookreviews.push({ user: username, review: review });
-    res.send(req.query.review);
+    res.send('Review Added: ' + review);
   } else {
     const matchingObject = bookreviews.find(
       (item) => item[key] === valueToMatch
     );
     const indexOfMatchingObject = bookreviews.indexOf(matchingObject);
     bookreviews[indexOfMatchingObject].review = review;
-    res.send(req.query.review);
+    res.send('Review Updated: ' + review);
   }
   /*
     let i = 0
@@ -137,7 +137,7 @@ regd_users.delete('/auth/review/:isbn', (req, res) => {
     }
 
     console.log(bookreviews);
-    return res.status(200).send(bookreviews);
+    return res.status(200).send('Review Deleted');
   }
 });
 

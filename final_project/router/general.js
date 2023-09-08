@@ -114,25 +114,18 @@ public_users.get('/author/:author', async function (req, res) {
     });
   };
   // Call the asynchronous operation using await
+
+  let matchingAuthorsArray = [];
+  let matchingAuthorsObject = {};
   await getBooksAuthor()
     .then((matchingAuthors) => {
-      return res.send(matchingAuthors).status(200); // Send the object as a JSON response
+      matchingAuthorsArray.push(matchingAuthors);
+      matchingAuthorsObject = { booksByAuthor: matchingAuthorsArray };
+      return res.send(matchingAuthorsObject).status(200); // Send the object as a JSON response
     })
     .catch((error) => {
       res.status(500).json({ error: 'An error occurred' });
     });
-
-  /*
-  // Initialize an empty object to store matching objects
-  const matchingAuthors = {};
-
-  // Loop through the dictionary and add matching objects to the result
-  for (const personKey in books) {
-    if (books[personKey][key] === valueToMatch) {
-      matchingAuthors[personKey] = books[personKey];
-    }
-  }
-  return res.send(matchingAuthors).status(200);  */
 });
 
 // Get all books based on title
@@ -157,26 +150,19 @@ public_users.get('/title/:title', async function (req, res) {
       }, 500); // Simulate a 1-second delay
     });
   };
-  // Call the asynchronous operation
+  // Call the asynchronous operation using await
+
+  let matchingTitlesArray = [];
+  let matchingTitlesObject = {};
   await getBooksTitle()
     .then((matchingTitles) => {
-      return res.send(matchingTitles).status(200); // Send the object as a JSON response
+      matchingTitlesArray.push(matchingTitles);
+      matchingTitlesObject = { booksByTitle: matchingTitlesArray };
+      return res.send(matchingTitlesObject).status(200); // Send the object as a JSON response
     })
     .catch((error) => {
       res.status(500).json({ error: 'An error occurred' });
     });
-
-  /*
-  // Initialize an empty object to store matching objects
-  const matchingTitles = {};
-
-  // Loop through the dictionary and add matching objects to the result
-  for (const personKey in books) {
-    if (books[personKey][key] === valueToMatch) {
-      matchingTitles[personKey] = books[personKey];
-    }
-  }
-  return res.send(matchingTitles).status(200);*/
 });
 
 //  Get book reviews
